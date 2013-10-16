@@ -1,4 +1,4 @@
-/* 
+/*
  * Cryptographic API
  *
  * ARC4 Cipher Algorithm
@@ -11,6 +11,7 @@
  * (at your option) any later version.
  *
  */
+
 #include <linux/module.h>
 #include <linux/init.h>
 #include "rtl_crypto.h"

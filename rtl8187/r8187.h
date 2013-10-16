@@ -125,25 +125,25 @@
 #define PRISM_HDR_SIZE 64
 
 typedef enum _WIRELESS_MODE {
-	WIRELESS_MODE_UNKNOWN = 0x00,
-	WIRELESS_MODE_A = 0x01,
-	WIRELESS_MODE_B = 0x02,
-	WIRELESS_MODE_G = 0x04,
-	WIRELESS_MODE_AUTO = 0x08,
+    WIRELESS_MODE_UNKNOWN = 0x00,
+    WIRELESS_MODE_A = 0x01,
+    WIRELESS_MODE_B = 0x02,
+    WIRELESS_MODE_G = 0x04,
+    WIRELESS_MODE_AUTO = 0x08,
 } WIRELESS_MODE;
 
 typedef enum _TR_SWITCH_STATE{
-	TR_HW_CONTROLLED = 0,
-	TR_SW_TX = 1,
+    TR_HW_CONTROLLED = 0,
+    TR_SW_TX = 1,
 }TR_SWITCH_STATE, *PTR_SWITCH_STATE;
 
 
-#define RTL_IOCTL_WPA_SUPPLICANT		SIOCIWFIRSTPRIV+30
+#define RTL_IOCTL_WPA_SUPPLICANT        SIOCIWFIRSTPRIV+30
 
 typedef struct buffer
 {
-	struct buffer *next;
-	u32 *buf;
+    struct buffer *next;
+    u32 *buf;
 
 } buffer;
 
@@ -159,225 +159,225 @@ typedef struct rtl_reg_debug{
 }rtl_reg_debug;
 #if 0
 typedef struct _CHANNEL_LIST{
-	u8	Channel[MAX_CHANNEL_NUMBER + 1];
-	u8	Len;
+    u8  Channel[MAX_CHANNEL_NUMBER + 1];
+    u8  Len;
 }CHANNEL_LIST, *PCHANNEL_LIST;
 #endif
 #if 0
 
 typedef struct tx_pendingbuf
 {
-	struct ieee80211_txb *txb;
-	short ispending;
-	short descfrag;
+    struct ieee80211_txb *txb;
+    short ispending;
+    short descfrag;
 } tx_pendigbuf;
 
 #endif
 
 
 typedef enum{
-	LOW_PRIORITY ,
-	NORM_PRIORITY
-	} priority_t;
+    LOW_PRIORITY ,
+    NORM_PRIORITY
+    } priority_t;
 
 typedef enum{
-	NIC_8187 = 1,
-	NIC_8187B
-	} nic_t;
+    NIC_8187 = 1,
+    NIC_8187B
+    } nic_t;
 
 typedef struct Stats
 {
-	unsigned long txrdu;
-	unsigned long rxok;
-	unsigned long rxurberr;
-	unsigned long rxstaterr;
-	unsigned long txnperr;
-	unsigned long txnpdrop;
-	unsigned long txresumed;
-	unsigned long rxerr;
-	unsigned long rxint;
-	unsigned long txnpokint;
-	unsigned long txhpokint;
-	unsigned long txhperr;
-	unsigned long txoverflow;
-	unsigned long txok;
-	unsigned long txerr;
-	unsigned long txretry;
-	unsigned long txbeaconerr;
-	unsigned long txbeaconok;
-	unsigned long txlpokint;
-	unsigned long txlpdrop;
-	unsigned long txlperr;
-	unsigned long txdatapkt;
-	unsigned long rxretry;
-	unsigned long rxcrcerrmin;
-	unsigned long rxcrcerrmid;
-	unsigned long rxcrcerrmax;
-	unsigned long rxicverr;
+    unsigned long txrdu;
+    unsigned long rxok;
+    unsigned long rxurberr;
+    unsigned long rxstaterr;
+    unsigned long txnperr;
+    unsigned long txnpdrop;
+    unsigned long txresumed;
+    unsigned long rxerr;
+    unsigned long rxint;
+    unsigned long txnpokint;
+    unsigned long txhpokint;
+    unsigned long txhperr;
+    unsigned long txoverflow;
+    unsigned long txok;
+    unsigned long txerr;
+    unsigned long txretry;
+    unsigned long txbeaconerr;
+    unsigned long txbeaconok;
+    unsigned long txlpokint;
+    unsigned long txlpdrop;
+    unsigned long txlperr;
+    unsigned long txdatapkt;
+    unsigned long rxretry;
+    unsigned long rxcrcerrmin;
+    unsigned long rxcrcerrmid;
+    unsigned long rxcrcerrmax;
+    unsigned long rxicverr;
 
-	unsigned long txbeaconokint;
-	unsigned long txbeacondrop;
+    unsigned long txbeaconokint;
+    unsigned long txbeacondrop;
 } Stats;
 
-typedef struct 	ChnlAccessSetting {
-	u16 SIFS_Timer;
-	u16 DIFS_Timer;
-	u16 SlotTimeTimer;
-	u16 EIFS_Timer;
-	u16 CWminIndex;
-	u16 CWmaxIndex;
+typedef struct  ChnlAccessSetting {
+    u16 SIFS_Timer;
+    u16 DIFS_Timer;
+    u16 SlotTimeTimer;
+    u16 EIFS_Timer;
+    u16 CWminIndex;
+    u16 CWmaxIndex;
 }*PCHANNEL_ACCESS_SETTING,CHANNEL_ACCESS_SETTING;
 
 typedef struct tx_urb_context {
-	struct urb *tx_urb;
-	u8	*transfer_buffer;
-	u8	*ptalign_buf;
+    struct urb *tx_urb;
+    u8  *transfer_buffer;
+    u8  *ptalign_buf;
 }tx_urb_context;
 
-typedef	enum _RT_RF_POWER_STATE
+typedef enum _RT_RF_POWER_STATE
 {
-	eRfOn,
-	eRfSleep,
-	eRfOff
+    eRfOn,
+    eRfSleep,
+    eRfOff
 }RT_RF_POWER_STATE;
-typedef	enum _RT_PS_MODE
+typedef enum _RT_PS_MODE
 {
-	eActive,
-	eMaxPs,
-	eFastPs
+    eActive,
+    eMaxPs,
+    eFastPs
 }RT_PS_MODE;
-#define IC_DEFAULT_THREE_WIRE	 0
-#define SW_THREE_WIRE		 1
-#define SW_THREE_WIRE_BY_8051	 2
-#define HW_THREE_WIRE		 3
+#define IC_DEFAULT_THREE_WIRE    0
+#define SW_THREE_WIRE        1
+#define SW_THREE_WIRE_BY_8051    2
+#define HW_THREE_WIRE        3
 #define HW_THREE_WIRE_BY_8051    4
 
 typedef struct r8180_priv
 {
-	struct usb_device *udev;
-	short epromtype;
-	int irq;
-	struct ieee80211_device *ieee80211;
-	struct net_device *dev;
+    struct usb_device *udev;
+    short epromtype;
+    int irq;
+    struct ieee80211_device *ieee80211;
+    struct net_device *dev;
 
-	short card_8187;
-	short card_8187_Bversion;
-	short card_8185;
-	short card_8185_Bversion;
-	short phy_ver;
-	short enable_gpio0;
-	enum card_type {PCI,MINIPCI,CARDBUS,USB}card_type;
-	short hw_plcp_len;
-	short plcp_preamble_mode;
+    short card_8187;
+    short card_8187_Bversion;
+    short card_8185;
+    short card_8185_Bversion;
+    short phy_ver;
+    short enable_gpio0;
+    enum card_type {PCI,MINIPCI,CARDBUS,USB}card_type;
+    short hw_plcp_len;
+    short plcp_preamble_mode;
 
 
-	spinlock_t tx_lock;
-	spinlock_t ps_lock;
-	spinlock_t rf_ps_lock;
+    spinlock_t tx_lock;
+    spinlock_t ps_lock;
+    spinlock_t rf_ps_lock;
 
-	u16 irq_mask;
-	short chan;
-	short sens;
-	short max_sens;
-	u8 chtxpwr[15];
-	u8 chtxpwr_ofdm[15];
-	u8 cck_txpwr_base;
-	u8 ofdm_txpwr_base;
-	u8 challow[15];
-	u8 channel_plan;
+    u16 irq_mask;
+    short chan;
+    short sens;
+    short max_sens;
+    u8 chtxpwr[15];
+    u8 chtxpwr_ofdm[15];
+    u8 cck_txpwr_base;
+    u8 ofdm_txpwr_base;
+    u8 challow[15];
+    u8 channel_plan;
 
-	short up;
-	short crcmon;
-	struct timer_list ps_timer;
-	short PS_timeout;
+    short up;
+    short crcmon;
+    struct timer_list ps_timer;
+    short PS_timeout;
 
-	struct semaphore wx_sem;
-	struct semaphore power_sem;
+    struct semaphore wx_sem;
+    struct semaphore power_sem;
 
-	short rf_chip;
-	short (*rf_set_sens)(struct net_device *dev,short sens);
-	void (*rf_set_chan)(struct net_device *dev,short ch);
-	void (*rf_close)(struct net_device *dev);
-	void (*rf_init)(struct net_device *dev);
-	void (*rf_wakeup)(struct net_device *dev);
-	void (*rf_sleep)(struct net_device *dev);
-	short promisc;
-	struct Stats stats;
-	struct iw_statistics wstats;
-	struct proc_dir_entry *dir_dev;
+    short rf_chip;
+    short (*rf_set_sens)(struct net_device *dev,short sens);
+    void (*rf_set_chan)(struct net_device *dev,short ch);
+    void (*rf_close)(struct net_device *dev);
+    void (*rf_init)(struct net_device *dev);
+    void (*rf_wakeup)(struct net_device *dev);
+    void (*rf_sleep)(struct net_device *dev);
+    short promisc;
+    struct Stats stats;
+    struct iw_statistics wstats;
+    struct proc_dir_entry *dir_dev;
 
-	struct urb **rx_urb;
-	struct tx_urb_context tx_context[MAX_TX_URB];
+    struct urb **rx_urb;
+    struct tx_urb_context tx_context[MAX_TX_URB];
 #ifdef THOMAS_BEACON
-	u32 *oldaddr;
+    u32 *oldaddr;
 #endif
 #ifdef THOMAS_TASKLET
-	atomic_t irt_counter;
+    atomic_t irt_counter;
 #endif
 #ifdef JACKSON_NEW_RX
         struct sk_buff **pp_rxskb;
         int     rx_inx;
 #endif
-	short  tx_urb_index;
+    short  tx_urb_index;
 
 
 
 
-	atomic_t tx_lp_pending;
-	atomic_t tx_np_pending;
+    atomic_t tx_lp_pending;
+    atomic_t tx_np_pending;
 #if 0
-	u32 *txlpring;
-	u32 *txhpring;
-	u32 *txnpring;
-	dma_addr_t txlpringdma;
-	dma_addr_t txhpringdma;
-	dma_addr_t txnpringdma;
-	u32 *txlpringtail;
-	u32 *txhpringtail;
-	u32 *txnpringtail;
-	u32 *txlpringhead;
-	u32 *txhpringhead;
-	u32 *txnpringhead;
-	struct buffer *txlpbufs;
-	struct buffer *txhpbufs;
-	struct buffer *txnpbufs;
-	struct buffer *txlpbufstail;
-	struct buffer *txhpbufstail;
-	struct buffer *txnpbufstail;
-	int txringcount;
-	int txbuffsize;
+    u32 *txlpring;
+    u32 *txhpring;
+    u32 *txnpring;
+    dma_addr_t txlpringdma;
+    dma_addr_t txhpringdma;
+    dma_addr_t txnpringdma;
+    u32 *txlpringtail;
+    u32 *txhpringtail;
+    u32 *txnpringtail;
+    u32 *txlpringhead;
+    u32 *txhpringhead;
+    u32 *txnpringhead;
+    struct buffer *txlpbufs;
+    struct buffer *txhpbufs;
+    struct buffer *txnpbufs;
+    struct buffer *txlpbufstail;
+    struct buffer *txhpbufstail;
+    struct buffer *txnpbufstail;
+    int txringcount;
+    int txbuffsize;
 
-	struct tasklet_struct irq_tx_tasklet;
+    struct tasklet_struct irq_tx_tasklet;
 #endif
-	struct tasklet_struct irq_rx_tasklet;
-	struct urb *rxurb_task;
+    struct tasklet_struct irq_rx_tasklet;
+    struct urb *rxurb_task;
 
 #if 0
-	u32 *txbeacontail;
-	dma_addr_t txbeaconringdma;
-	u32 *txbeaconring;
-	int txbeaconcount;
+    u32 *txbeacontail;
+    dma_addr_t txbeaconringdma;
+    u32 *txbeaconring;
+    int txbeaconcount;
 #endif
 
-	u16	ShortRetryLimit;
-	u16	LongRetryLimit;
-	u32	TransmitConfig;
-	u8	RegCWinMin;
+    u16 ShortRetryLimit;
+    u16 LongRetryLimit;
+    u32 TransmitConfig;
+    u8  RegCWinMin;
 
-	u16	EarlyRxThreshold;
-	u32	ReceiveConfig;
-	u8	AcmControl;
+    u16 EarlyRxThreshold;
+    u32 ReceiveConfig;
+    u8  AcmControl;
 
-	u8	RFProgType;
+    u8  RFProgType;
 
-	u8 retry_data;
-	u8 retry_rts;
-	u16 rts;
-	u8 ps_sleep_finish;
+    u8 retry_data;
+    u8 retry_rts;
+    u16 rts;
+    u8 ps_sleep_finish;
 
         u8                      antenna_flag;
         bool                    flag_beacon;
-	u8		ScanAllowedNow;
+    u8      ScanAllowedNow;
     struct timer_list rateadapter_timer;
     u16                                 LastRetryCnt;
         u16                                     LastRetryRate;
@@ -399,131 +399,131 @@ typedef struct r8180_priv
 
         u8                  CurrentOperaRate;
 #if LINUX_VERSION_CODE > KERNEL_VERSION(2,5,0)
-	struct work_struct rtl8180_hw_wakeup_wq;
+    struct work_struct rtl8180_hw_wakeup_wq;
 #else
-	struct tq_struct rtl8180_hw_wakeup_wq;
+    struct tq_struct rtl8180_hw_wakeup_wq;
 #endif
-	short ack_tx_to_ieee;
+    short ack_tx_to_ieee;
 
 #ifdef POLLING_METHOD_FOR_RADIO
-	u8 iwpriv_radio_on;
-	u8 wlan_first_up_flag1;
-	struct timer_list gpio_polling_timer;
+    u8 iwpriv_radio_on;
+    u8 wlan_first_up_flag1;
+    struct timer_list gpio_polling_timer;
 #endif
-	struct timer_list watch_dog_timer;
-	bool bInactivePs;
-	bool bSwRfProcessing;
-	RT_RF_POWER_STATE eInactivePowerState;
-	RT_RF_POWER_STATE eRFPowerState;
-	u32 RfOffReason;
-	bool RFChangeInProgress;
-	bool bInHctTest;
-	bool SetRFPowerStateInProgress;
-	bool bLeisurePs;
-	RT_PS_MODE dot11PowerSaveMode;
-	u32 NumRxOkInPeriod;
-	u32 NumTxOkInPeriod;
-	u8 RegThreeWireMode;
-	bool ps_mode;
-	bool bDigMechanism;
-	bool bCCKThMechanism;
-	u8   InitialGain;
-	u8   StageCCKTh;
-	u8   RegBModeGainStage;
-	u8   RegDigOfdmFaUpTh;
-	u8   DIG_NumberFallbackVote;
-	u8   DIG_NumberUpgradeVote;
-	u16  CCKUpperTh;
-	u16  CCKLowerTh;
-	u32  FalseAlarmRegValue;
-	int  UndecoratedSmoothedSS;
-	bool bRegHighPowerMechanism;
-	bool bToUpdateTxPwr;
-	u8   Z2HiPwrUpperTh;
-	u8   Z2HiPwrLowerTh;
-	u8   Z2RSSIHiPwrUpperTh;
-	u8   Z2RSSIHiPwrLowerTh;
-	u8   CurCCKRSSI;
-	bool bCurCCKPkt;
-	u32  wMacRegRfPinsOutput;
-	u32  wMacRegRfPinsSelect;
-	TR_SWITCH_STATE TrSwitchState;
-	u8   radion;
-	struct 	ChnlAccessSetting  ChannelAccessSetting;
+    struct timer_list watch_dog_timer;
+    bool bInactivePs;
+    bool bSwRfProcessing;
+    RT_RF_POWER_STATE eInactivePowerState;
+    RT_RF_POWER_STATE eRFPowerState;
+    u32 RfOffReason;
+    bool RFChangeInProgress;
+    bool bInHctTest;
+    bool SetRFPowerStateInProgress;
+    bool bLeisurePs;
+    RT_PS_MODE dot11PowerSaveMode;
+    u32 NumRxOkInPeriod;
+    u32 NumTxOkInPeriod;
+    u8 RegThreeWireMode;
+    bool ps_mode;
+    bool bDigMechanism;
+    bool bCCKThMechanism;
+    u8   InitialGain;
+    u8   StageCCKTh;
+    u8   RegBModeGainStage;
+    u8   RegDigOfdmFaUpTh;
+    u8   DIG_NumberFallbackVote;
+    u8   DIG_NumberUpgradeVote;
+    u16  CCKUpperTh;
+    u16  CCKLowerTh;
+    u32  FalseAlarmRegValue;
+    int  UndecoratedSmoothedSS;
+    bool bRegHighPowerMechanism;
+    bool bToUpdateTxPwr;
+    u8   Z2HiPwrUpperTh;
+    u8   Z2HiPwrLowerTh;
+    u8   Z2RSSIHiPwrUpperTh;
+    u8   Z2RSSIHiPwrLowerTh;
+    u8   CurCCKRSSI;
+    bool bCurCCKPkt;
+    u32  wMacRegRfPinsOutput;
+    u32  wMacRegRfPinsSelect;
+    TR_SWITCH_STATE TrSwitchState;
+    u8   radion;
+    struct  ChnlAccessSetting  ChannelAccessSetting;
 #if LINUX_VERSION_CODE > KERNEL_VERSION(2,5,0)
-	struct work_struct reset_wq;
+    struct work_struct reset_wq;
 #else
-	struct tq_struct reset_wq;
+    struct tq_struct reset_wq;
 #endif
 
 
 #ifdef LED
-	u8		EEPROMCustomerID;
-	RT_CID_TYPE	CustomerID;
-	LED_8187	Gpio0Led;
-	LED_8187	SwLed0;
-	LED_8187	SwLed1;
-	u8			bEnableLedCtrl;
-	LED_STRATEGY_8187	LedStrategy;
-	u8			PsrValue;
+    u8      EEPROMCustomerID;
+    RT_CID_TYPE CustomerID;
+    LED_8187    Gpio0Led;
+    LED_8187    SwLed0;
+    LED_8187    SwLed1;
+    u8          bEnableLedCtrl;
+    LED_STRATEGY_8187   LedStrategy;
+    u8          PsrValue;
 #if LINUX_VERSION_CODE > KERNEL_VERSION(2,5,0)
-	struct work_struct		Gpio0LedWorkItem;
-	struct work_struct		SwLed0WorkItem;
-	struct work_struct		SwLed1WorkItem;
+    struct work_struct      Gpio0LedWorkItem;
+    struct work_struct      SwLed0WorkItem;
+    struct work_struct      SwLed1WorkItem;
 #else
-	struct tq_struct		Gpio0LedWorkItem;
-	struct tq_struct		SwLed0WorkItem;
-	struct tq_struct		SwLed1WorkItem;
+    struct tq_struct        Gpio0LedWorkItem;
+    struct tq_struct        SwLed0WorkItem;
+    struct tq_struct        SwLed1WorkItem;
 #endif
 #endif
 
-	bool			bAntennaDiversityTimerIssued;
-	short antb;
-	short diversity;
-	bool	AutoloadFailFlag;
-	u16	EEPROMVersion;
-	u8					EEPROMAntennaDiversity;
-	u16					EEPROMCSThreshold;
-	u8					EEPROMDefaultAntennaB;
-	u8					EEPROMDigitalPhy;
-	u32					EEPROMCSMethod;
-	u8					EEPROMGEPRFOffState;
-	u32			AdMainAntennaRxOkCnt;
-	u32			AdAuxAntennaRxOkCnt;
-	bool			bHWAdSwitched;
-	u8 EEPROMSwAntennaDiversity;
-	bool EEPROMDefaultAntenna1;
-	u8 RegSwAntennaDiversityMechanism;
-	bool bSwAntennaDiverity;
-	u8 RegDefaultAntenna;
-	bool bDefaultAntenna1;
-	u8 SignalStrength;
-	long Stats_SignalStrength;
-	long LastSignalStrengthInPercent;
-	u8	 SignalQuality;
-	long Stats_SignalQuality;
-	long RecvSignalPower;
-	long Stats_RecvSignalPower;
-	u8	 LastRxPktAntenna;
-	u32 AdRxOkCnt;
-	long AdRxSignalStrength;
-	u8 CurrAntennaIndex;
-	u8 AdTickCount;
-	u8 AdCheckPeriod;
-	u8 AdMinCheckPeriod;
-	u8 AdMaxCheckPeriod;
-	long AdRxSsThreshold;
-	long AdMaxRxSsThreshold;
-	bool bAdSwitchedChecking;
-	long AdRxSsBeforeSwitched;
-	struct timer_list SwAntennaDiversityTimer;
+    bool            bAntennaDiversityTimerIssued;
+    short antb;
+    short diversity;
+    bool    AutoloadFailFlag;
+    u16 EEPROMVersion;
+    u8                  EEPROMAntennaDiversity;
+    u16                 EEPROMCSThreshold;
+    u8                  EEPROMDefaultAntennaB;
+    u8                  EEPROMDigitalPhy;
+    u32                 EEPROMCSMethod;
+    u8                  EEPROMGEPRFOffState;
+    u32         AdMainAntennaRxOkCnt;
+    u32         AdAuxAntennaRxOkCnt;
+    bool            bHWAdSwitched;
+    u8 EEPROMSwAntennaDiversity;
+    bool EEPROMDefaultAntenna1;
+    u8 RegSwAntennaDiversityMechanism;
+    bool bSwAntennaDiverity;
+    u8 RegDefaultAntenna;
+    bool bDefaultAntenna1;
+    u8 SignalStrength;
+    long Stats_SignalStrength;
+    long LastSignalStrengthInPercent;
+    u8   SignalQuality;
+    long Stats_SignalQuality;
+    long RecvSignalPower;
+    long Stats_RecvSignalPower;
+    u8   LastRxPktAntenna;
+    u32 AdRxOkCnt;
+    long AdRxSignalStrength;
+    u8 CurrAntennaIndex;
+    u8 AdTickCount;
+    u8 AdCheckPeriod;
+    u8 AdMinCheckPeriod;
+    u8 AdMaxCheckPeriod;
+    long AdRxSsThreshold;
+    long AdMaxRxSsThreshold;
+    bool bAdSwitchedChecking;
+    long AdRxSsBeforeSwitched;
+    struct timer_list SwAntennaDiversityTimer;
 
 }r8180_priv;
 
 #ifdef JOHN_HWSEC
 struct ssid_thread {
-	struct net_device *dev;
-       	u8 name[IW_ESSID_MAX_SIZE + 1];
+    struct net_device *dev;
+        u8 name[IW_ESSID_MAX_SIZE + 1];
 };
 #endif
 

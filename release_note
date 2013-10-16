@@ -25,18 +25,18 @@ Operating system release = Fedora 2,3,4,5,6,7; Debian 3.1; Suse 9.3,10.0,10.1,10
 Kernel version =2.6.XX
 Release driver version = 1030.0925.2008
 Change history = 1. Add Radio ON/OFF Method and Network function properly.
-		 2. driver function properly when suspend/resume.
-		 3. OS shall sleep/wakeup properly with the driver suspend/resume feature enabled.
-		 4. Upgrate the ioctl process for wext function.
-		 5. Show proper signal strength with command line.
-		 6. Show proper signal bar with NetworkManager for scanned Networks.
-		 7. Show proper Signal  strength with linked AP.
-		 8. Add WPA/WPA2 wext interface for wpa link.
-		 9. LED function properly when the link is alive.
-		 10. LED on/off properly during initialization, power on/off and suspend/resume, etc.
-		 11. Rate adaptive mechanism.
-		 12. High power issue.
-		 13. Add hidden ap raleted capacity .
+         2. driver function properly when suspend/resume.
+         3. OS shall sleep/wakeup properly with the driver suspend/resume feature enabled.
+         4. Upgrate the ioctl process for wext function.
+         5. Show proper signal strength with command line.
+         6. Show proper signal bar with NetworkManager for scanned Networks.
+         7. Show proper Signal  strength with linked AP.
+         8. Add WPA/WPA2 wext interface for wpa link.
+         9. LED function properly when the link is alive.
+         10. LED on/off properly during initialization, power on/off and suspend/resume, etc.
+         11. Rate adaptive mechanism.
+         12. High power issue.
+         13. Add hidden ap raleted capacity .
 
 -------------------------------------
 Wireless LAN Linux driver for RTL8187
@@ -92,9 +92,9 @@ Operating system release = Fedora 2,3,4,5,6,7; Debian 3.1; Suse 9.3,10.0,10.1,10
 Kernel version =2.6.XX
 Release driver version = 1037.1105.2008
 Change history = 1. Ad VID/PID 0x1B75/0x8187.
-		 2. Support 2.6.27 kernel.
-		 3. Support debian 3.1 kernel 2.6.13.
-		 4. change watchdog in softmac_scan_wq to ieee_scanwatchdog for roaming.
+         2. Support 2.6.27 kernel.
+         3. Support debian 3.1 kernel 2.6.13.
+         4. change watchdog in softmac_scan_wq to ieee_scanwatchdog for roaming.
 
 
 -------------------------------------
@@ -105,11 +105,11 @@ Operating system release = REDHAT 9/OPENSUSE 11/ubuntu9.04
 Kernel version = 2.4.20-8smp/2.4.31/2.6.25.5-1/2.6.28
 Release driver version = 1038.0626.2009
 Change history = 1. Add support of 2.4 kernel, all function test pass on 2.4/2.6 kernel.
-		 2. Fix some IPW issue.
-		 3. Fix switch AP by UI fail issue.
-		 4. The issue of linking to last ap first when switch another ap by UI was fixed.
-		 5. Fix adhoc SW beacon crash issue.
-		 6. instead all add_timer with mod_timer.
+         2. Fix some IPW issue.
+         3. Fix switch AP by UI fail issue.
+         4. The issue of linking to last ap first when switch another ap by UI was fixed.
+         5. Fix adhoc SW beacon crash issue.
+         6. instead all add_timer with mod_timer.
 
 
 -------------------------------------
@@ -120,7 +120,7 @@ Operating system release = REDHAT 9/OPENSUSE 11/ubuntu9.04/ubuntu9.10
 Kernel version = 2.4.20-8smp/2.4.31/2.6.25.5-1/2.6.28/2.6.31
 Release driver version = 1039.0104.2010
 Change history = 1. fix iwconfig panic issue because of "wrqu->name" size overflow.
-		 2. Update to kernel 2.6.32.
+         2. Update to kernel 2.6.32.
 
 
 -------------------------------------
@@ -131,7 +131,7 @@ Operating system release = REDHAT 9/OPENSUSE 11/ubuntu9.04/ubuntu9.10/ubuntu10.0
 Kernel version = 2.4.20-8smp/2.4.31/2.6.25.5-1/2.6.28/2.6.31/2.6.35-1
 Release driver version = 1040.0820.2010
 Change history = 1. fix the wep challenge text overflow.
-		 2. Update to kernel 2.6.35-1
+         2. Update to kernel 2.6.35-1
 
 -------------------------------------
 Wireless LAN Linux driver for RTL8187

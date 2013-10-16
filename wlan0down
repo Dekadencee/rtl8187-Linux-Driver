@@ -3,7 +3,7 @@
 ifconfig wlan0 down
 
 SYSTEM=`uname -r|cut -d. -f1,2`
-                                                                                                                             
+
 if [ $SYSTEM = 2.4 ]
 then
 

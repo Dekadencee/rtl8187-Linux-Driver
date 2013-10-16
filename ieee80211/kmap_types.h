@@ -1,7 +1,5 @@
 #ifndef __KMAP_TYPES_H
-
 #define __KMAP_TYPES_H
-
 
 enum km_type {
 	KM_BOUNCE_READ,
@@ -16,5 +14,4 @@ enum km_type {
 };
 
 #define _ASM_KMAP_TYPES_H
-
 #endif

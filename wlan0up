@@ -1,7 +1,7 @@
 #!/bin/sh
 
 SYSTEM=`uname -r|cut -d. -f1,2`
-                                                                                                                             
+
 if [ $SYSTEM = 2.4 ]
 then
 cd ieee80211
@@ -13,7 +13,7 @@ insmod ieee80211_crypt_wep-rsl.o
 insmod ieee80211_crypt_tkip-rsl.o
 insmod ieee80211_crypt_ccmp-rsl.o
 insmod ieee80211-rsl.o
-                                                                                                                             
+
 cd ../rtl8187
 insmod r8187l.o
 

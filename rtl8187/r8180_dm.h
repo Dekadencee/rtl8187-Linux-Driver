@@ -43,12 +43,12 @@ void rtl8180_tx_pw_wq(struct net_device *dev);
 #ifdef SW_ANTE_DIVERSITY
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,20))
 void SwAntennaWorkItemCallback(struct work_struct *work);
-#else   
+#else
 void SwAntennaWorkItemCallback(struct net_device *dev);
 #endif
 void SwAntennaDiversityRxOk8185(struct net_device *dev, u8 SignalStrength);
 void SwAntennaDiversityTimerCallback(struct net_device *dev);
-#endif 
+#endif
 #endif
 
 #endif

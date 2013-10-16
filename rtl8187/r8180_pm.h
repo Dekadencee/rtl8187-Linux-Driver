@@ -36,6 +36,6 @@ int rtl8187_suspend  (struct usb_interface *intf,pm_message_t state);
 int rtl8187_resume (struct usb_interface *intf);
 int rtl8180_enable_wake (struct pci_dev *dev, u32 state, int enable);
 
-#endif 
+#endif
 
-#endif 
+#endif

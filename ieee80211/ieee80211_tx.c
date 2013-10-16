@@ -24,10 +24,10 @@
 
 ******************************************************************************
 
-  Few modifications for Realtek's Wi-Fi drivers by 
+  Few modifications for Realtek's Wi-Fi drivers by
   Andrea Merello <andreamrl@tiscali.it>
-  
-  A special thanks goes to Realtek for their support ! 
+
+  A special thanks goes to Realtek for their support !
 
 ******************************************************************************/
 
@@ -64,59 +64,59 @@
 
 
 802.11 frame_contorl for data frames - 2 bytes
-     ,-----------------------------------------------------------------------------------------.
+	 ,-----------------------------------------------------------------------------------------.
 bits | 0  |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |  a  |  b  |  c  |  d  |  e   |
-     |----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|------|
+	 |----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|------|
 val  | 0  |  0  |  0  |  1  |  x  |  0  |  0  |  0  |  1  |  0  |  x  |  x  |  x  |  x  |  x   |
-     |----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|------|
+	 |----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|------|
 desc | ^-ver-^  |  ^type-^  |  ^-----subtype-----^  | to  |from |more |retry| pwr |more |wep   |
-     |          |           | x=0 data,x=1 data+ack | DS  | DS  |frag |     | mgm |data |      |
-     '-----------------------------------------------------------------------------------------'
-		                                    /\
-                                                    |
+	 |          |           | x=0 data,x=1 data+ack | DS  | DS  |frag |     | mgm |data |      |
+	 '-----------------------------------------------------------------------------------------'
+											/\
+													|
 802.11 Data Frame                                   |
-           ,--------- 'ctrl' expands to >-----------'
-          |
-      ,--'---,-------------------------------------------------------------.
+		   ,--------- 'ctrl' expands to >-----------'
+		  |
+	  ,--'---,-------------------------------------------------------------.
 Bytes |  2   |  2   |    6    |    6    |    6    |  2   | 0..2312 |   4  |
-      |------|------|---------|---------|---------|------|---------|------|
+	  |------|------|---------|---------|---------|------|---------|------|
 Desc. | ctrl | dura |  DA/RA  |   TA    |    SA   | Sequ |  Frame  |  fcs |
-      |      | tion | (BSSID) |         |         | ence |  data   |      |
-      `--------------------------------------------------|         |------'
+	  |      | tion | (BSSID) |         |         | ence |  data   |      |
+	  `--------------------------------------------------|         |------'
 Total: 28 non-data bytes                                 `----.----'
-                                                              |
-       .- 'Frame data' expands to <---------------------------'
-       |
-       V
-      ,---------------------------------------------------.
+															  |
+	   .- 'Frame data' expands to <---------------------------'
+	   |
+	   V
+	  ,---------------------------------------------------.
 Bytes |  1   |  1   |    1    |    3     |  2   |  0-2304 |
-      |------|------|---------|----------|------|---------|
+	  |------|------|---------|----------|------|---------|
 Desc. | SNAP | SNAP | Control |Eth Tunnel| Type | IP      |
-      | DSAP | SSAP |         |          |      | Packet  |
-      | 0xAA | 0xAA |0x03 (UI)|0x00-00-F8|      |         |
-      `-----------------------------------------|         |
+	  | DSAP | SSAP |         |          |      | Packet  |
+	  | 0xAA | 0xAA |0x03 (UI)|0x00-00-F8|      |         |
+	  `-----------------------------------------|         |
 Total: 8 non-data bytes                         `----.----'
-                                                     |
-       .- 'IP Packet' expands, if WEP enabled, to <--'
-       |
-       V
-      ,-----------------------.
+													 |
+	   .- 'IP Packet' expands, if WEP enabled, to <--'
+	   |
+	   V
+	  ,-----------------------.
 Bytes |  4  |   0-2296  |  4  |
-      |-----|-----------|-----|
+	  |-----|-----------|-----|
 Desc. | IV  | Encrypted | ICV |
-      |     | IP Packet |     |
-      `-----------------------'
+	  |     | IP Packet |     |
+	  `-----------------------'
 Total: 8 non-data bytes
 
 
 802.3 Ethernet Data Frame
 
-      ,-----------------------------------------.
+	  ,-----------------------------------------.
 Bytes |   6   |   6   |  2   |  Variable |   4  |
-      |-------|-------|------|-----------|------|
+	  |-------|-------|------|-----------|------|
 Desc. | Dest. | Source| Type | IP Packet |  fcs |
-      |  MAC  |  MAC  |      |           |      |
-      `-----------------------------------------'
+	  |  MAC  |  MAC  |      |           |      |
+	  `-----------------------------------------'
 Total: 18 non-data bytes
 
 In the event that fragmentation is required, the incoming payload is split into
@@ -192,12 +192,12 @@ int ieee80211_encrypt_fragment(
 	struct ieee80211_hdr *header;
 
 	if (ieee->tkip_countermeasures &&
-	    crypt && crypt->ops && strcmp(crypt->ops->name, "TKIP") == 0) {
+		crypt && crypt->ops && strcmp(crypt->ops->name, "TKIP") == 0) {
 		header = (struct ieee80211_hdr *) frag->data;
 		if (net_ratelimit()) {
 			printk(KERN_DEBUG "%s: TKIP countermeasures: dropped "
-			       "TX packet to " MAC_FMT "\n",
-			       ieee->dev->name, MAC_ARG(header->addr1));
+				   "TX packet to " MAC_FMT "\n",
+				   ieee->dev->name, MAC_ARG(header->addr1));
 		}
 		return -1;
 	}
@@ -217,7 +217,7 @@ int ieee80211_encrypt_fragment(
 	atomic_dec(&crypt->refcnt);
 	if (res < 0) {
 		printk(KERN_INFO "%s: Encryption failed: len=%d.\n",
-		       ieee->dev->name, frag->len);
+			   ieee->dev->name, frag->len);
 		ieee->ieee_stats.tx_discards++;
 		return -1;
 	}
@@ -269,7 +269,7 @@ struct ieee80211_txb *ieee80211_alloc_txb(int nr_frags, int txb_size,
 int ieee80211_xmit(struct sk_buff *skb,
 		   struct net_device *dev)
 {
-#if LINUX_VERSION_CODE > KERNEL_VERSION(2,5,0) 
+#if LINUX_VERSION_CODE > KERNEL_VERSION(2,5,0)
 	struct ieee80211_device *ieee = netdev_priv(dev);
 #else
 	struct ieee80211_device *ieee = (struct ieee80211_device *)dev->priv;
@@ -288,43 +288,43 @@ int ieee80211_xmit(struct sk_buff *skb,
 	};
 	u8 dest[ETH_ALEN], src[ETH_ALEN];
 	int pend;
-            
+
 
 	struct ieee80211_crypt_data* crypt;
-       
+
 	spin_lock_irqsave(&ieee->lock, flags);
-        
+
 	/* If there is no driver handler to take the TXB, dont' bother
 	 * creating it... */
 	if ((!ieee->hard_start_xmit && !(ieee->softmac_features & IEEE_SOFTMAC_TX_QUEUE))||
 	   ((!ieee->softmac_data_hard_start_xmit && (ieee->softmac_features & IEEE_SOFTMAC_TX_QUEUE)))) {
 		printk(KERN_WARNING "%s: No xmit handler.\n",
-		       ieee->dev->name);
+			   ieee->dev->name);
 		goto success;
 	}
 
 	if(likely(ieee->raw_tx == 0)){
-	
+
 		if (unlikely(skb->len < SNAP_SIZE + sizeof(u16))) {
 			printk(KERN_WARNING "%s: skb too small (%d).\n",
 			ieee->dev->name, skb->len);
 			goto success;
 		}
-	
-		
+
+
 		ether_type = ntohs(((struct ethhdr *)skb->data)->h_proto);
-                
-               	crypt = ieee->crypt[ieee->tx_keyidx];
-	
+
+				crypt = ieee->crypt[ieee->tx_keyidx];
+
 		encrypt = !(ether_type == ETH_P_PAE && ieee->ieee802_1x) &&
 			ieee->host_encrypt && crypt && crypt->ops;
-	
+
 		if (!encrypt && ieee->ieee802_1x &&
 		ieee->drop_unencrypted && ether_type != ETH_P_PAE) {
 			stats->tx_dropped++;
 			goto success;
 		}
-	
+
 	#ifdef CONFIG_IEEE80211_DEBUG
 		if (crypt && !encrypt && ether_type == ETH_P_PAE) {
 			struct eapol *eap = (struct eapol *)(skb->data +
@@ -333,25 +333,25 @@ int ieee80211_xmit(struct sk_buff *skb,
 				eap_get_type(eap->type));
 		}
 	#endif
-	
+
 		/* Save source and destination addresses */
 		memcpy(&dest, skb->data, ETH_ALEN);
 		memcpy(&src, skb->data+ETH_ALEN, ETH_ALEN);
-              
-                      	
-                           
-              	/* Advance the SKB to the start of the payload */
+
+
+
+				/* Advance the SKB to the start of the payload */
 		skb_pull(skb, sizeof(struct ethhdr));
-	
+
 		/* Determine total amount of storage required for TXB packets */
 		bytes = skb->len + SNAP_SIZE + sizeof(u16);
-                	
+
 		if (encrypt)
 			fc = IEEE80211_FTYPE_DATA | IEEE80211_STYPE_DATA |
 				IEEE80211_FCTL_WEP;
 		else
 			fc = IEEE80211_FTYPE_DATA | IEEE80211_STYPE_DATA;
-	
+
 		if (ieee->iw_mode == IW_MODE_INFRA) {
 			fc |= IEEE80211_FCTL_TODS;
 			/* To DS: Addr1 = BSSID, Addr2 = SA,
@@ -367,9 +367,9 @@ int ieee80211_xmit(struct sk_buff *skb,
 			memcpy(&header.addr3, ieee->current_network.bssid, ETH_ALEN);
 		}
 		header.frame_ctl = cpu_to_le16(fc);
-		
+
 		hdr_len = IEEE80211_3ADDR_LEN;
-               
+
 	/* Determine fragmentation size based on destination (multicast
 		* and broadcast are not fragmented) */
 		if (is_multicast_ether_addr(dest) ||
@@ -377,7 +377,7 @@ int ieee80211_xmit(struct sk_buff *skb,
 			frag_size = MAX_FRAG_THRESHOLD;
 		else
 			frag_size = ieee->fts;
-	
+
 		/* Determine amount of payload per fragment.  Regardless of if
 		* this stack is providing the full 802.11 header, one will
 		* eventually be affixed to this fragment -- so we must account for
@@ -386,12 +386,12 @@ int ieee80211_xmit(struct sk_buff *skb,
 		if (ieee->config &
 		(CFG_IEEE80211_COMPUTE_FCS | CFG_IEEE80211_RESERVE_FCS))
 			bytes_per_frag -= IEEE80211_FCS_LEN;
-	
+
 		/* Each fragment may need to have room for encryptiong pre/postfix */
 		if (encrypt)
 			bytes_per_frag -= crypt->ops->extra_prefix_len +
 					crypt->ops->extra_postfix_len;
-	
+
 		/* Number of fragments is the total bytes_per_frag /
 		* payload_per_fragment */
 		nr_frags = bytes / bytes_per_frag;
@@ -400,11 +400,11 @@ int ieee80211_xmit(struct sk_buff *skb,
 			nr_frags++;
 		else
 			bytes_last_frag = bytes_per_frag;
-	
+
 		/* When we allocate the TXB we allocate enough space for the reserve
 		* and full fragment bytes (bytes_per_frag doesn't include prefix,
 		* postfix, header, FCS, etc.) */
-		
+
 		pend = atomic_read(&ieee->tx_pending_txb);
 		if(pend > (MAX_TX_SKB - 1)) {
 			goto failed;
@@ -413,7 +413,7 @@ int ieee80211_xmit(struct sk_buff *skb,
 		}
 		txb = ieee->alloc_txb[ieee->tx_skb_index];
 		ieee->tx_skb_index = (ieee->tx_skb_index + 1) % MAX_TX_SKB;
-		
+
 		if (unlikely(!txb)) {
 			printk(KERN_WARNING "%s: Could not allocate TXB\n",
 			ieee->dev->name);
@@ -425,38 +425,38 @@ int ieee80211_xmit(struct sk_buff *skb,
 			txb->fragments[i]->data = txb->fragments[i]->head + 16;
 			txb->fragments[i]->tail = txb->fragments[i]->data;
 		}
-			
-#if 1		
+
+#if 1
 		txb->nr_frags = nr_frags;
 		txb->frag_size = frag_size;
-#endif		
+#endif
 		txb->encrypted = encrypt;
 		txb->payload_size = bytes;
-	
+
 		for (i = 0; i < nr_frags; i++) {
 			skb_frag = txb->fragments[i];
-	
+
 			if (encrypt)
 				skb_reserve(skb_frag, crypt->ops->extra_prefix_len);
-	
+
 			frag_hdr = (struct ieee80211_hdr *)skb_put(skb_frag, hdr_len);
 			memcpy(frag_hdr, &header, hdr_len);
-	
+
 			/* If this is not the last fragment, then add the MOREFRAGS
 			* bit to the frame control */
 			if (i != nr_frags - 1) {
 				frag_hdr->frame_ctl = cpu_to_le16(
 					fc | IEEE80211_FCTL_MOREFRAGS);
 				bytes = bytes_per_frag;
-		
+
 			} else {
 				/* The last fragment takes the remaining length */
 				bytes = bytes_last_frag;
 			}
-			
+
 			frag_hdr->seq_ctl = cpu_to_le16(ieee->seq_ctrl<<4 | i);
-			
-			
+
+
 			/* Put a SNAP header on the first fragment */
 			if (i == 0) {
 				ieee80211_put_snap(
@@ -464,12 +464,12 @@ int ieee80211_xmit(struct sk_buff *skb,
 					ether_type);
 				bytes -= SNAP_SIZE + sizeof(u16);
 			}
-	
+
 			memcpy(skb_put(skb_frag, bytes), skb->data, bytes);
-	
+
 			/* Advance the SKB... */
 			skb_pull(skb, bytes);
-	
+
 			/* Encryption routine will move the header forward in order
 			* to insert the IV between the header and the payload */
 			if (encrypt)
@@ -488,18 +488,18 @@ int ieee80211_xmit(struct sk_buff *skb,
 			ieee->dev->name, skb->len);
 			goto success;
 		}
-	
+
 		txb = ieee80211_alloc_txb(1, skb->len, GFP_ATOMIC);
 		if(!txb){
 			printk(KERN_WARNING "%s: Could not allocate TXB\n",
 			ieee->dev->name);
 			goto failed;
 		}
-		
+
 		txb->encrypted = 0;
 		txb->payload_size = skb->len;
 		memcpy(skb_put(txb->fragments[0],skb->len), skb->data, skb->len);
-	}	
+	}
 
  success:
 	spin_unlock_irqrestore(&ieee->lock, flags);

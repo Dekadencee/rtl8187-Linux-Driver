@@ -10,4 +10,3 @@ var2=`ps aux|awk '/dhclient wlan0/'|awk '$11!="awk"{print $2}'`
 kill $var2
 rm -f /etc/sysconfig/network-scripts/ifcfg-wlan0
 echo "get ip: $var1"
-

@@ -7,10 +7,11 @@
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
- * Software Foundation; either version 2 of the License, or (at your option) 
+ * Software Foundation; either version 2 of the License, or (at your option)
  * any later version.
  *
  */
+
 #include "rtl_crypto.h"
 #include <linux/mm.h>
 #include <linux/errno.h>
@@ -36,7 +37,7 @@ static void update(struct crypto_tfm *tfm,
 
 		do {
 			unsigned int bytes_from_page = min(l, ((unsigned int)
-							   (PAGE_SIZE)) - 
+							   (PAGE_SIZE)) -
 							   offset);
 			char *p = crypto_kmap(pg, 0) + offset;
 
@@ -72,7 +73,7 @@ static void digest(struct crypto_tfm *tfm,
 	unsigned int i;
 
 	tfm->crt_digest.dit_init(tfm);
-		
+
 	for (i = 0; i < nsg; i++) {
 		char *p = crypto_kmap(sg[i].page, 0) + sg[i].offset;
 		tfm->__crt_alg->cra_digest.dia_update(crypto_tfm_ctx(tfm),
@@ -91,13 +92,13 @@ int crypto_init_digest_flags(struct crypto_tfm *tfm, u32 flags)
 int crypto_init_digest_ops(struct crypto_tfm *tfm)
 {
 	struct digest_tfm *ops = &tfm->crt_digest;
-	
+
 	ops->dit_init	= init;
 	ops->dit_update	= update;
 	ops->dit_final	= final;
 	ops->dit_digest	= digest;
 	ops->dit_setkey	= setkey;
-	
+
 	return crypto_alloc_hmac_block(tfm);
 }
 
