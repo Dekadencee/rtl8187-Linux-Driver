@@ -1,0 +1,41 @@
+#!/bin/sh
+
+SYSTEM=`uname -r|cut -d. -f1,2`
+                                                                                                                             
+if [ $SYSTEM = 2.4 ]
+then
+cd ieee80211
+insmod ieee80211_crypt-rsl.o
+insmod crypto-rsl.o
+insmod michael_mic-rsl.o
+insmod aes-rsl.o
+insmod ieee80211_crypt_wep-rsl.o
+insmod ieee80211_crypt_tkip-rsl.o
+insmod ieee80211_crypt_ccmp-rsl.o
+insmod ieee80211-rsl.o
+                                                                                                                             
+cd ../rtl8187
+insmod r8187l.o
+
+else #2.6 kernel
+
+cd ieee80211/
+#insmod ieee80211_crypt-rtl.ko
+#insmod ieee80211_crypt_wep-rtl.ko
+#insmod ieee80211_crypt_tkip-rtl.ko
+#insmod ieee80211_crypt_ccmp-rtl.ko
+#insmod ieee80211-rtl.ko
+
+cd ../rtl8187/
+insmod r8187l.ko
+
+cd ../
+
+cp RadioPower.sh /etc/acpi/events
+
+fi
+
+ifconfig wlan0 up
+
+#iwconfig wlan0 essid linksys_lzm
+#ifconfig wlan0 192.168.1.102

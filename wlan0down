@@ -1,0 +1,29 @@
+#!/bin/sh
+
+ifconfig wlan0 down
+
+SYSTEM=`uname -r|cut -d. -f1,2`
+                                                                                                                             
+if [ $SYSTEM = 2.4 ]
+then
+
+rmmod r8187l
+rmmod ieee80211-rsl
+rmmod ieee80211_crypt_ccmp-rsl
+rmmod ieee80211_crypt_tkip-rsl
+rmmod ieee80211_crypt_wep-rsl
+rmmod aes-rsl
+rmmod michael_mic-rsl
+rmmod crypto-rsl
+rmmod ieee80211_crypt-rsl
+
+else #2.6 kernle
+
+rmmod r8187l.ko
+#rmmod ieee80211-rtl.ko
+#rmmod ieee80211_crypt_ccmp-rtl.ko
+#rmmod ieee80211_crypt_tkip-rtl.ko
+#rmmod ieee80211_crypt_wep-rtl.ko
+#rmmod ieee80211_crypt-rtl.ko
+
+fi

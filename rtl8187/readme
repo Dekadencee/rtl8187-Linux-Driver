@@ -1,0 +1,124 @@
+rtl8187 Linux kernel driver
+Released under the terms of GNU General Public Licence (GPL)
+Copyright(c) Andrea Merello - 2004,2005
+
+Portions of this driver are based on other projects, please see the notes
+in the source files for detail.
+A special thanks go to Realtek corp for their support and to David Young
+------------------------------------------------------------------------------
+
+This is an attempt to write somethig that can make rtl8187 usb dongle wifi card
+on Linux using only opensource stuff. 
+The rtl8225 radio is supported.
+
+It's in early development stage so don't expect too much from it 
+(also use it at your own risk!)
+This should be considered just a fragment of code.. using it on your(any) 
+system is at your own risk! Please note that I never supported the idea to 
+use it in any way, so i cannot be considered responsible in any way for 
+anything deriving by it usage.
+
+Anyway for now we have monitor mode and managed mode
+basically working! This isn't necessary stable, but seems to work.. 
+
+This driver is still under development and very far from perfect. It should work on x86,
+Other archs are untested..
+
+To compile the driver simply run make.
+
+The driver contains also the ieee80211.h and ieee80211_crypt.h from the ieee stack.
+Note that for some reasons this stack is NOT the same that will be included in newer
+2.6 kernel. I will try to port to this stack as soon as it will have enought features
+to support 8187 cards. 
+Please note that you will have to make sure the two .h files are the same of the ieee
+stack.
+In other words when you download from the CVS this driver and the ieee80211 stack a good
+idea is to copy the ieee80211.h and ieee80211_crypt.h from the ieee directory to the drv
+directory
+
+Warning during compile are OK
+
+To wake up the nic run:
+
+   ifconfig <ifacename> up 
+
+(where <ifacename> is your network device for wlan card).
+
+Please note that the default interface name is wlanX.
+
+Please note thet this will take several seconds.. 
+
+If you would like to set the interface name to something else you may use the 
+'devname=' module parameter. For example:
+
+   insmod r8187.ko ifname=eth%d 
+
+will set the interface name of this device to something like eth0.
+
+Once the nic is up it can be put in a monitor mode by running:
+
+   iwconfig <ifacename> mode monitor
+
+and channel number may be changed by running:
+
+   iwconfig <ifacename> channel XX
+
+
+In monitor mode a choice may be made via iwpriv if the nic should pass packets 
+with bad crc or drop them.
+
+To put the nic in managed mode run:
+
+   iwconfig <ifacename> mode managed
+
+In managed mode there is support for
+
+   iwlist scan
+
+that should report the currently available networks.
+Please note that in managed mode channels cannot be changed manually.
+
+To associate with a network
+   
+   iwconfig <ifacename> essid XXXXX
+
+where XXXXX is the network essid (name) reported by 'iwlist scan'. Please
+note that essid is case sensitive.
+
+If your network is not broadcasting the ESSID, then you need to specify *also*
+the AP MAC address 
+
+   iwconfig <ifacename> ap XX:XX:XX:XX:XX:XX
+
+The driver accepts another boolean parameter: hwseqnum
+If set to 1 it lets the card HW take care of the sequence number of the TXed 
+frames. Altought in managed mode I can't see an important reason to use HW to 
+do that, when we'll start to TX beacons in master (AP) and ad-hoc modes most 
+probably it will be extremely useful (since most probably we will use two HW 
+queues).
+
+I'm unsure if it will work correctly on all NICs.. reports are *VERY, VERY* apreciated.. 
+
+ 
+ WEP
+ ===
+
+WEP encryption should work. For now it's done by host, not by the nic. Key can be set with:
+Key can be set with
+   
+   iwconfig <ifacename> key 12345...
+
+WEP is supported via software thanks to the ipw stack.
+
+Shared and open authentication are supported
+
+ IWPRIV
+ ======
+
+This driver supports some private handlers:
+-badcrc: let you choose to kill or to pass to the upper layer frames with bad crc in monitor mode
+-activescan: if 0 the driver will avoid to send probe requests, sanning will be only on beacon basis
+
+
+If you have some question/comments please feel free to write me.
+

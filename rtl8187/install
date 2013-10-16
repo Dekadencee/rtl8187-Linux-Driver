@@ -1,0 +1,239 @@
+    Installing the rtl8180-sa2400 Linux kernel driver
+
+Released under the terms of GNU General Public Licence (GPL)
+Copyright(c) Andrea Merello - 2004, Install instructions by Rick Bronson
+
+NOTE: These instructions were written for a Knoppix 3.6 (using Linux
+2.6.7 kernel)
+
+1. Hardware prerequisites
+
+1.1 One of the following devices:
+
+  1.1.1	Realtek card, Man ID = 0x10ec. Device ID =0x8180 (make sure it
+        mount sa2400 radio. Many cards do, many don't)
+  1.1.2 Belkin F5D6001 PCI card, Man ID = 0x1799, Device ID =0x6001
+        (Version 3)
+  1.1.3	Belkin F5D6020 Version 3 (3000) Cardbus card, , Man ID =
+        0x1799, Device ID =0x6020  NOTE: version 1 and 2 will not work
+  1.1.4 DLINK card, Man ID = 0x1799, 0x1186, Device ID =0x3300
+        (A DWL-610 is working here, but I'm not sure all these cards 
+	have rtl8180 & sa2400)
+
+2. Software prerequisites
+
+2.1 Linux 2.6.0 or greater, 2.4 might work but you'll have to do some
+    hacking.
+
+3. Instructions
+
+3.1 Get latest driver from
+    http:
+    we'll use rtl8180-0.9.1) and build:
+
+tar xzf rtl8180-0.9.1.tar.gz
+cd rtl8180-0.9.1
+make
+
+(naturally, substitute 0.9.1 with the current version number)
+
+  You can ignore any "no CRC" warnings.
+
+3.2 Module loading (order is important)
+
+for user convenience a ./module_load script is provided.
+Anyway if you want to do manually:
+
+sudo insmod ieee80211-r8180_crypt.ko
+# you may or may not have to do this following step, Knoppix needs it
+sudo insmod /usr/src/linux/lib/crc32.ko
+# you will also need ARC4 support in kernel or by loading module
+
+sudo insmod ieee80211_crypt_wep.ko
+sudo insmod ieee80211-r8180.ko 
+sudo insmod r8180.ko
+
+Once the above is done, you can do some checks to verify if all went
+OK:
+
+  Doing 
+
+cat /proc/modules
+
+ Gives:
+
+---------------------------------------
+r8180 34312 0 - Live 0xc6c55000
+ieee80211-r8180 25988 1 r8180, Live 0xc6c41000
+ieee80211_crypt_wep 9216 0 - Live 0xc6c34000
+crc32 8064 1 ieee80211_crypt_wep, Live 0xc6c31000
+ieee80211-r8180_crypt 9092 2 ieee80211-r8180,ieee80211_crypt_wep, Live 0xc6c2d000
+---------------------------------------
+
+  If you do:
+
+dmesg
+
+  You should see something like:
+
+---------------------------
+rtl8180: Card MAC address is XX:XX:XX:XX:XX:XX
+...
+rtl8180: driver probe completed
+---------------------------
+
+In this output you should see also other detail like if you have a
+digital or analog PHY. support for the latter is experimental, please
+report..
+
+  If you do:
+
+ifconfig -a
+
+  You should see
+
+---------------------------
+wlan0     Link encap:Ethernet  HWaddr XX:XX:XX:XX:XX:XX
+          BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)
+          Interrupt:9 Base address:0x4800 
+---------------------------
+
+   Doing:
+
+cat /proc/interrupts
+
+  You should see something like:
+
+---------------------------
+  9:          0          ..... , wlan0
+---------------------------
+Where '9' could be any number
+
+If you have a CARDBUS card, doing "cardctl ident" should say something
+like:
+
+---------------------------------------
+Socket 1:
+  product info: "Realtek", "Rtl8180"
+  manfid: 0x0000, 0x024c
+  function: 6 (network)
+---------------------------------------
+
+  Doing:
+
+iwconfig
+
+  Shows:
+
+---------------------------
+wlan0     IEEE 802.11b  ESSID:""  Nickname:""
+          NWID:off/any  Mode:Managed  Frequency:2.462GHz  
+          Access Point: 00:11:50:0A:07:85  Bit Rate=-1.07375e+06kb/s   Tx-Power:off   
+          Sensitivity=1074102348/0  
+          Retry:off   RTS thr=-1073745104 B   Fragment thr:off
+          Power Management:off
+---------------------------
+For now not all parameters are meaningful (like Sensivity).
+
+
+3.3 Setup
+
+sudo ifconfig wlan0 up
+
+  At this point, if you are near an AP or wireless router you should
+start getting interrupts:
+
+cat /proc/interrupts
+
+---------------------------
+  9:        500          ...., wlan0
+---------------------------
+
+The second number increments. Note that this happens also if you have
+other peripherical on the same interrupt line and you use them.
+
+  Doing:
+
+ifconfig
+
+  Shows (note RX bytes):
+
+---------------------------
+wlan0     Link encap:UNSPEC  HWaddr 00-30-BD-4D-8F-9E-00-00-00-00-00-00-00-00-00-00  
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:2170 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:93343 (91.1 KiB)  TX bytes:0 (0.0 b)
+          Interrupt:9 Base address:0x4000 
+---------------------------
+
+  If you do:
+
+iwlist scan
+
+  If you are in range of an AP or wireless router, you should see
+  something like:
+
+---------------------------
+wlan0     Scan completed :
+          Cell 01 - Address: 00:11:50:0A:07:85
+                    ESSID:"solar"
+                    Mode:Master
+                    Frequency:2.462GHz (channel 11)
+                    Bit Rate:1Mb/s
+                    Bit Rate:2Mb/s
+                    Bit Rate:5.5Mb/s
+                    Bit Rate:11Mb/s
+                    Bit Rate:18Mb/s
+                    Bit Rate:24Mb/s
+                    Bit Rate:36Mb/s
+                    Bit Rate:54Mb/s
+                    Quality=21/100  Signal level=-28 dBm  Noise level=-256 dBm
+                    Encryption key:off
+---------------------------
+
+3.4 Test
+
+  Now set your SSID:
+
+sudo iwconfig wlan0 essid solar
+
+ Substitute 'solar' (my essid) with your essid.
+
+  Set your address (you may want to use different numbers here):
+
+sudo ifconfig wlan0 broadcast 192.168.0.255 netmask 255.255.255.0 192.168.0.100
+
+  Add a route, if you need it:
+
+sudo route add default gw 192.168.0.1 dev wlan0
+
+  Try pinging another host (like the wireless router itself):
+
+ping 192.168.0.1
+
+  For further usage hint (es. setting WEP key or monitor mode see README file)
+  
+3.3 Installing permanently (so the driver is loaded when you reboot).
+
+  < Not done yet >
+
+3.4 Diagnostics
+
+ Some commands you can use to try to figure out what's gone wrong:
+
+lsmod
+dmesg
+ifconfig -a
+iwconfig
+cat /proc/iomem
+cat /proc/interrupts
+cardctl ident
+iwlist scan
+
+ In particular dmesg output is very useful/appreciated in report
